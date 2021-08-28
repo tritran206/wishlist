@@ -1,6 +1,6 @@
-package com.example.week3.data
+package com.example.wishlist.data
 
-import com.example.week3.data.model.Product
+import com.example.wishlist.data.model.Product
 
 class DataSource {
 

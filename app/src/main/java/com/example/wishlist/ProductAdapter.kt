@@ -1,23 +1,19 @@
-package com.example.week3
+package com.example.wishlist
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.week3.data.model.Product
-import com.example.week3.databinding.ListItemProductBinding
+import com.example.wishlist.data.model.Product
+import com.example.wishlist.databinding.ListItemProductBinding
 
-class ProductAdapter(val productList: List<Product>) :
+class ProductAdapter(val productList: List<Product>, val listener: OnProductClickedListener) :
     RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
     class ProductViewHolder(val binding: ListItemProductBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val binding = ListItemProductBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-
         return ProductViewHolder(binding)
     }
 
@@ -30,7 +26,13 @@ class ProductAdapter(val productList: List<Product>) :
             Glide.with(root)
                 .load(product.pictureUrl)
                 .into(productImage)
+
+            root.setOnClickListener {
+                listener.onProductClicked(position)
+            }
         }
+
+
     }
 
     override fun getItemCount(): Int {

@@ -1,4 +1,4 @@
-package com.example.week3.data.model
+package com.example.wishlist.data.model
 
 import java.text.NumberFormat
 import java.util.*

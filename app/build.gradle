@@ -11,7 +11,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.example.week3"
+        applicationId "com.example.wishlist"
         minSdk 21
         targetSdk 30
         versionCode 1
