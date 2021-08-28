@@ -26,6 +26,7 @@ class ProductAdapter(val productList: List<Product>) :
         holder.binding.apply {
             productName.text = product.name
             productPrice.text = product.getPrice()
+            productDescription.text = product.description
             Glide.with(root)
                 .load(product.pictureUrl)
                 .into(productImage)
