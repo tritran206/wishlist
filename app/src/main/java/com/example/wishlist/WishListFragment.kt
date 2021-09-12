@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.wishlist.data.DataSource
 import com.example.wishlist.databinding.FragmentWishListBinding
@@ -17,14 +18,19 @@ class WishListFragment :
     private var _binding: FragmentWishListBinding? = null
     private val binding get() = _binding!!
     lateinit var adapter: ProductAdapter
+    private val viewModel:ProductViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentWishListBinding.inflate(inflater, container, false)
-        val data = DataSource().getProducts()
-        adapter = ProductAdapter(data, this)
+        viewModel.loadProducts()
+        adapter = ProductAdapter(
+            productList = if (viewModel.productList != null) { viewModel.productList!! } else { emptyList() },
+            listener = this
+        )
+
         val recyclerProducts = binding.recyclerProducts
         recyclerProducts.adapter = adapter
         return binding.root

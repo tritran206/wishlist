@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import com.example.wishlist.data.DataSource
 import com.example.wishlist.databinding.FragmentProductDetailBinding
 
@@ -14,7 +15,7 @@ class ProductDetailFragment : Fragment() {
 
     private var _binding: FragmentProductDetailBinding? = null
     private val binding get() = _binding!!
-    private val dataSource = DataSource()
+    private val viewModel:ProductViewModel by activityViewModels()
     private var productIndex: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,10 +30,10 @@ class ProductDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentProductDetailBinding.inflate(inflater, container, false)
-        val productList = dataSource.getProducts()
-        val product = productList[productIndex!!]
-        binding.textViewProductName.text = product.name
-        binding.textViewProductPrice.text = product.getPrice()
+        val productList = viewModel.productList
+        val product = productList?.get(productIndex!!)
+        binding.textViewProductName.text = product?.name
+        binding.textViewProductPrice.text = product?.getPrice()
         return binding.root
     }
 
