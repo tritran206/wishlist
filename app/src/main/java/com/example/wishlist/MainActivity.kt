@@ -1,38 +1,33 @@
 package com.example.wishlist
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.recyclerview.widget.RecyclerView
-import com.example.wishlist.data.DataSource
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupActionBarWithNavController
+import com.example.wishlist.databinding.ActivityMainBinding
 
-class MainActivity :
-    AppCompatActivity(),
-    OnProductClickedListener
-{
-    lateinit var adapter: ProductAdapter
+class MainActivity : AppCompatActivity() {
+
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
-        val data = DataSource().getProducts()
+        val binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        adapter = ProductAdapter(data, this)
-
-        val recyclerProducts = findViewById<RecyclerView>(R.id.recycler_products)
-        recyclerProducts.adapter = adapter
+        // Get the navigation host fragment from this Activity
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        // Instantiate the navController using the NavHostFragment
+        navController = navHostFragment.navController
+        // Make sure actions in the ActionBar get propagated to the NavController
+        setupActionBarWithNavController(navController)
     }
 
-    override fun onProductClicked(productIndex: Int) {
-        val intent = Intent(this, ProductDetailActivity::class.java)
-            .putExtra("PRODUCT_ID", productIndex)
-
-        startActivity(intent)
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
     }
-
 }
 
-interface OnProductClickedListener {
-    fun onProductClicked(productIndex: Int)
-}
