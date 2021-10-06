@@ -20,7 +20,7 @@ class ProductDetailFragment : Fragment() {
     private var _binding: FragmentProductDetailBinding? = null
     private val binding get() = _binding!!
     private val viewModel:ProductViewModel by activityViewModels()
-    private var productIndex: Int? = null
+    private var productIndex: Int = 0
     private var product: Product? = null
 
 
@@ -34,10 +34,10 @@ class ProductDetailFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentProductDetailBinding.inflate(inflater, container, false)
         val productList = viewModel.productList
-        product = productList?.get(productIndex!!)
+        product = productList[productIndex]
         bindButton()
         return binding.root
     }

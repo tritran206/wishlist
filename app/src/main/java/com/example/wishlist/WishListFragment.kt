@@ -25,9 +25,8 @@ class WishListFragment :
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentWishListBinding.inflate(inflater, container, false)
-        viewModel.loadProducts()
         adapter = ProductAdapter(
-            productList = if (viewModel.productList != null) { viewModel.productList!! } else { emptyList() },
+            productList = viewModel.productList,
             listener = this
         )
 
