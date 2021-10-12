@@ -11,7 +11,9 @@ class ProductAdapter(val productList: List<Product>, val listener: OnProductClic
     RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
     class ProductViewHolder(val binding: ListItemProductBinding) : RecyclerView.ViewHolder(binding.root)
+    //need to pass in the view to initialize it
 
+    //code that runs to inflate view that was created
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val binding = ListItemProductBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ProductViewHolder(binding)

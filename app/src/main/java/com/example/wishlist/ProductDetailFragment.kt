@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.wishlist.data.DataSource
 import com.example.wishlist.data.model.Product
+import com.example.wishlist.data.model.ReviewAdapter
 import com.example.wishlist.databinding.FragmentProductDetailBinding
 
 private const val ARG_PRODUCT_INDEX = "productIndex"
@@ -21,7 +22,7 @@ class ProductDetailFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel:ProductViewModel by activityViewModels()
     private var productIndex: Int = 0
-    private var product: Product? = null
+    private lateinit var product: Product
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,16 +40,17 @@ class ProductDetailFragment : Fragment() {
         val productList = viewModel.productList
         product = productList[productIndex]
         bindButton()
+        bindRecyclerView()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.textViewProductName.text = product?.name
-        binding.textViewProductPrice.text = product?.getPrice()
-        binding.textViewDescription.text = product?.description
+        binding.textViewProductName.text = product.name
+        binding.textViewProductPrice.text = product.getPrice()
+        binding.textViewDescription.text = product.description
         Glide.with(binding.root)
-            .load(product?.pictureUrl)
+            .load(product.pictureUrl)
             .into(binding.imageViewProduct)
     }
 
@@ -59,10 +61,16 @@ class ProductDetailFragment : Fragment() {
 
     private fun bindButton() {
         binding.buttonBuy.setOnClickListener {
-            Toast.makeText(activity, "Thanks for buying ${product?.name}", Toast.LENGTH_LONG).show()
+            Toast.makeText(activity, "Thanks for buying ${product.name}", Toast.LENGTH_LONG).show()
             this.findNavController().popBackStack()
 
         }
+    }
+
+    private fun bindRecyclerView() {
+        val adapter = ReviewAdapter(viewModel.filterReviews(product.id))
+        binding.recyclerViewReview.adapter = adapter
+
     }
 
 }
