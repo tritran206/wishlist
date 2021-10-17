@@ -20,7 +20,18 @@
         android:label="ProductDetail"
         tools:layout="@layout/fragment_product_detail">
         <argument
-            android:name="productIndex"
-            app:argType="integer" />
+            android:name="productId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_productDetailFragment_to_addReviewFragment"
+            app:destination="@id/addReviewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addReviewFragment"
+        android:name="com.example.wishlist.AddReviewFragment"
+        android:label="AddReviewFragment" >
+        <argument
+            android:name="productId"
+            app:argType="string" />
     </fragment>
 </navigation>

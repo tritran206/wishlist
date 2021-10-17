@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.wishlist.data.DataSource
 import com.example.wishlist.databinding.FragmentWishListBinding
@@ -18,13 +19,18 @@ class WishListFragment :
     private var _binding: FragmentWishListBinding? = null
     private val binding get() = _binding!!
     lateinit var adapter: ProductAdapter
-    private val viewModel:ProductViewModel by activityViewModels()
+    lateinit var viewModel: ProductViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentWishListBinding.inflate(inflater, container, false)
+
+        val application = requireNotNull(this.activity).application
+        val viewModelFactory = ProductViewModelFactory(application)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(ProductViewModel::class.java)
+
         adapter = ProductAdapter(
             productList = viewModel.productList,
             listener = this
@@ -32,6 +38,7 @@ class WishListFragment :
 
         val recyclerProducts = binding.recyclerProducts
         recyclerProducts.adapter = adapter
+
         return binding.root
     }
 
@@ -40,13 +47,13 @@ class WishListFragment :
         _binding = null
     }
 
-    override fun onProductClicked(productIndex: Int) {
+    override fun onProductClicked(productId: String) {
         this.findNavController().navigate(
-            WishListFragmentDirections.actionWishListFragmentToProductDetailFragment(productIndex)
+            WishListFragmentDirections.actionWishListFragmentToProductDetailFragment(productId)
         )
     }
 }
 
 interface OnProductClickedListener {
-    fun onProductClicked(productIndex: Int)
+    fun onProductClicked(productId: String)
 }

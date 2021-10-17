@@ -23,14 +23,14 @@ class ProductAdapter(val productList: List<Product>, val listener: OnProductClic
         val product = productList[position]
         holder.binding.apply {
             productName.text = product.name
-            productPrice.text = product.getPrice()
+            productPrice.text = product.getFormatPrice()
             productDescription.text = product.description
             Glide.with(root)
                 .load(product.pictureUrl)
                 .into(productImage)
 
             root.setOnClickListener {
-                listener.onProductClicked(position)
+                listener.onProductClicked(product.id)
             }
         }
 
