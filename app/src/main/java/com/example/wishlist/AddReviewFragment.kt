@@ -15,6 +15,7 @@ import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
 private const val PRODUCT_ID = "productId"
+private const val REVIEW_ID = "reviewId"
 
 class AddReviewFragment : Fragment() {
 
@@ -22,11 +23,13 @@ class AddReviewFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var productId: String
     lateinit var viewModel: ProductViewModel
+    private var reviewId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             productId = it.getString(PRODUCT_ID) ?: ""
+            reviewId = it.getString(REVIEW_ID)
         }
     }
 
@@ -40,16 +43,28 @@ class AddReviewFragment : Fragment() {
         val viewModelFactory = ProductViewModelFactory(application)
         viewModel = ViewModelProvider(this, viewModelFactory).get(ProductViewModel::class.java)
 
+        bindReview()
+
         bindButton()
 
         return binding.root
     }
 
+    private fun bindReview() {
+        reviewId?.let{
+            val review = viewModel.getReview(it)
+
+            binding.editTextName.setText(review.user)
+            binding.editTextName.isEnabled = false
+            binding.ratingBarRating.rating = review.rating.toFloat()
+            binding.editTextReviewDescription.setText(review.text)
+    }}
+
     private fun bindButton() {
         binding.buttonSubmit.setOnClickListener {
             val review = Review (
                 productId = productId,
-                id = UUID.randomUUID().toString(),
+                id = reviewId ?: UUID.randomUUID().toString(),
                 rating = binding.ratingBarRating.rating.toDouble(),
                 user = binding.editTextName.text.toString(),
                 text = binding.editTextReviewDescription.text.toString()

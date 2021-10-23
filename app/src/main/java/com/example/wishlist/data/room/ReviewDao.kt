@@ -8,12 +8,15 @@ import com.example.wishlist.data.model.Review
 
 @Dao
 interface ReviewDao {
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(review: Review)
 
     // get all
     @Query("SELECT * FROM Review")
     fun getAllReviews(): List<Review>
+
+    @Query("SELECT * FROM Review WHERE id = :reviewId")
+    fun getReviewById(reviewId: String): Review
 
     //get review id
     @Query("SELECT * FROM Review WHERE productId = :productId")

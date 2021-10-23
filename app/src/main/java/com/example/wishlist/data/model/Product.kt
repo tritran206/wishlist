@@ -19,5 +19,4 @@ data class Product(
         val formatter = NumberFormat.getCurrencyInstance(Locale.US)
         return formatter.format(price)
     }
-
 }

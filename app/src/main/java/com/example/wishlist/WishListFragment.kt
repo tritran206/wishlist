@@ -36,6 +36,10 @@ class WishListFragment :
             listener = this
         )
 
+        binding.buttonToCart.setOnClickListener { 
+            this.findNavController().navigate(WishListFragmentDirections.actionWishListFragmentToShoppingCartFragment())
+        }
+
         val recyclerProducts = binding.recyclerProducts
         recyclerProducts.adapter = adapter
 

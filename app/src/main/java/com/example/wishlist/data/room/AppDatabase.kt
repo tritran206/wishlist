@@ -1,18 +1,20 @@
 package com.example.wishlist.data.room
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.room.*
+import com.example.wishlist.StringTypeConverter
+import com.example.wishlist.data.model.Cart
 import com.example.wishlist.data.model.Product
 import com.example.wishlist.data.model.Review
 
-@Database(entities = [Product::class, Review::class], version = 1, exportSchema = false)
+@Database(entities = [Product::class, Review::class, Cart::class], version = 1, exportSchema = false)
+@TypeConverters(StringTypeConverter::class)
 abstract class AppDatabase: RoomDatabase() {
 
     // TODO: Change to val if doesn't work
     abstract fun productDao(): ProductDao
     abstract fun reviewDao(): ReviewDao
+    abstract fun cartDao(): CartDao
 
     companion object {
         private var INSTANCE: AppDatabase? = null

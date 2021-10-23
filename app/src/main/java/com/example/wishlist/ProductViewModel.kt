@@ -2,8 +2,7 @@ package com.example.wishlist
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
-import com.example.wishlist.data.DataSource
+import com.example.wishlist.data.model.Cart
 import com.example.wishlist.data.model.Product
 import com.example.wishlist.data.model.Review
 import com.example.wishlist.data.model.Repository
@@ -17,9 +16,15 @@ class ProductViewModel(application: Application): AndroidViewModel(application) 
     private set
     var productList: List<Product> = repository.getAllProducts()
     private set
+    var cart = repository.getCart() ?: Cart()
+    private set
 
     fun getProduct(id: String): Product {
         return repository.getProduct(id)
+    }
+
+    fun getReview(id: String): Review {
+        return repository.getReview(id)
     }
 
     fun addReview(review: Review) {
@@ -32,4 +37,22 @@ class ProductViewModel(application: Application): AndroidViewModel(application) 
         }
     }
 
+    fun getProductsForCart(): List<Product> {
+        val shoppingList = cart.productIds
+        var products = mutableListOf<Product>()
+        shoppingList.forEach {
+            products.add(getProduct(it))
+        }
+        return products
+    }
+
+//    saves cart before ViewModel is destroyed
+    override fun onCleared() {
+        super.onCleared()
+        repository.insertCart(cart)
+    }
+
+    fun addProductToCart(id: String) {
+        cart.addToCart(id)
+    }
 }

@@ -16,7 +16,8 @@ import com.example.wishlist.databinding.FragmentProductDetailBinding
 
 private const val PRODUCT_ID = "productId"
 
-class ProductDetailFragment : Fragment() {
+class ProductDetailFragment : Fragment(), OnReviewClickedListener
+{
 
     private var _binding: FragmentProductDetailBinding? = null
     private val binding get() = _binding!!
@@ -62,21 +63,33 @@ class ProductDetailFragment : Fragment() {
 
     private fun bindButton() {
         binding.buttonBuy.setOnClickListener {
+            viewModel.addProductToCart(product.id)
             Toast.makeText(activity, "Thanks for buying ${product.name}", Toast.LENGTH_LONG).show()
             this.findNavController().popBackStack()
         }
 
         binding.buttonAddReview.setOnClickListener {
             this.findNavController().navigate(
-                ProductDetailFragmentDirections.actionProductDetailFragmentToAddReviewFragment(productId)
+                ProductDetailFragmentDirections.actionProductDetailFragmentToAddReviewFragment(productId, null)
             )
         }
     }
 
     private fun bindRecyclerView() {
-        val adapter = ReviewAdapter(viewModel.filterReviews(product.id))
+        val adapter = ReviewAdapter(viewModel.filterReviews(product.id), this)
         binding.recyclerViewReview.adapter = adapter
 
     }
 
+    override fun onReviewClicked(reviewId: String) {
+        this.findNavController().navigate(
+            ProductDetailFragmentDirections.actionProductDetailFragmentToAddReviewFragment(productId, reviewId)
+        )
+    }
+
+
+}
+
+interface OnReviewClickedListener {
+    fun onReviewClicked(productId: String)
 }
