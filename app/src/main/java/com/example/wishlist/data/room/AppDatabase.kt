@@ -3,11 +3,11 @@ package com.example.wishlist.data.room
 import android.content.Context
 import androidx.room.*
 import com.example.wishlist.StringTypeConverter
-import com.example.wishlist.data.model.Cart
+import com.example.wishlist.data.model.CartItem
 import com.example.wishlist.data.model.Product
 import com.example.wishlist.data.model.Review
 
-@Database(entities = [Product::class, Review::class, Cart::class], version = 1, exportSchema = false)
+@Database(entities = [Product::class, Review::class, CartItem::class], version = 2, exportSchema = false)
 @TypeConverters(StringTypeConverter::class)
 abstract class AppDatabase: RoomDatabase() {
 

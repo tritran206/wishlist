@@ -1,6 +1,7 @@
 package com.example.wishlist.data.model
 
 import android.content.Context
+import androidx.lifecycle.LiveData
 import com.example.wishlist.data.room.AppDatabase
 
 class Repository(context: Context) {
@@ -53,12 +54,12 @@ class Repository(context: Context) {
     }
 
     /** Cart **/
-    fun getCart(): Cart {
+    fun getCart(): LiveData<List<CartItem>> {
         return cartDao.getCart()
     }
 
-    fun insertCart(cart: Cart) {
-        cartDao.insertCart(cart)
+    fun insertCart(cartItem: CartItem) {
+        cartDao.insertItem(cartItem)
     }
 
 
