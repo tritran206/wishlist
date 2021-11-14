@@ -58,7 +58,7 @@ class Repository(context: Context) {
         return cartDao.getCart()
     }
 
-    fun insertCart(cartItem: CartItem) {
+    fun insertCartItem(cartItem: CartItem) {
         cartDao.insertItem(cartItem)
     }
 

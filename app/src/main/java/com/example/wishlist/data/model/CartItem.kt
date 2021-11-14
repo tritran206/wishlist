@@ -11,7 +11,7 @@ data class CartItem(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     @ColumnInfo(name = "item_id")
-    val itemId: String
+    val productId: String
 )
 
 

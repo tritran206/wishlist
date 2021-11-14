@@ -7,7 +7,7 @@ import com.bumptech.glide.Glide
 import com.example.wishlist.data.model.Product
 import com.example.wishlist.databinding.ListItemCartBinding
 
-class ShoppingCartAdapter(val cartItems: List<Product>): RecyclerView.Adapter<ShoppingCartAdapter.CartViewHolder>() {
+class ShoppingCartAdapter(var cartItems: List<Product> = emptyList()): RecyclerView.Adapter<ShoppingCartAdapter.CartViewHolder>() {
     class CartViewHolder(val binding: ListItemCartBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {

@@ -1,5 +1,6 @@
 package com.example.wishlist.data.room
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -13,5 +14,5 @@ interface CartDao {
     fun insertItem(cartItem: CartItem)
 
     @Query("SELECT * FROM CartItem")
-    fun getCart(): List<CartItem>
+    fun getCart(): LiveData<List<CartItem>>
 }
