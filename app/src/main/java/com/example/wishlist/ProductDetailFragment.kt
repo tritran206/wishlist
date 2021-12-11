@@ -7,29 +7,32 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import com.example.wishlist.data.DataSource
 import com.example.wishlist.data.model.Product
 import com.example.wishlist.data.model.ReviewAdapter
 import com.example.wishlist.databinding.FragmentProductDetailBinding
 
-private const val ARG_PRODUCT_INDEX = "productIndex"
+private const val PRODUCT_ID = "productId"
 
-class ProductDetailFragment : Fragment() {
+class ProductDetailFragment : Fragment(), OnReviewClickedListener
+{
 
     private var _binding: FragmentProductDetailBinding? = null
     private val binding get() = _binding!!
-    private val viewModel:ProductViewModel by activityViewModels()
-    private var productIndex: Int = 0
+    private var productId: String = ""
     private lateinit var product: Product
-
-
+    private lateinit var viewModel:ProductViewModel
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            productIndex = it.getInt(ARG_PRODUCT_INDEX)
+            productId = it.getString(PRODUCT_ID) ?: ""
         }
+        val application = requireNotNull(this.activity).application
+        val viewModelFactory = ProductViewModelFactory(application)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(ProductViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -37,8 +40,7 @@ class ProductDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentProductDetailBinding.inflate(inflater, container, false)
-        val productList = viewModel.productList
-        product = productList[productIndex]
+        product = viewModel.getProduct(productId)
         bindButton()
         bindRecyclerView()
         return binding.root
@@ -47,7 +49,7 @@ class ProductDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.textViewProductName.text = product.name
-        binding.textViewProductPrice.text = product.getPrice()
+        binding.textViewProductPrice.text = product.getFormatPrice()
         binding.textViewDescription.text = product.description
         Glide.with(binding.root)
             .load(product.pictureUrl)
@@ -61,16 +63,33 @@ class ProductDetailFragment : Fragment() {
 
     private fun bindButton() {
         binding.buttonBuy.setOnClickListener {
+            viewModel.addProductToCart(product.id)
             Toast.makeText(activity, "Thanks for buying ${product.name}", Toast.LENGTH_LONG).show()
             this.findNavController().popBackStack()
+        }
 
+        binding.buttonAddReview.setOnClickListener {
+            this.findNavController().navigate(
+                ProductDetailFragmentDirections.actionProductDetailFragmentToAddReviewFragment(productId, null)
+            )
         }
     }
 
     private fun bindRecyclerView() {
-        val adapter = ReviewAdapter(viewModel.filterReviews(product.id))
+        val adapter = ReviewAdapter(viewModel.filterReviews(product.id), this)
         binding.recyclerViewReview.adapter = adapter
 
     }
 
+    override fun onReviewClicked(reviewId: String) {
+        this.findNavController().navigate(
+            ProductDetailFragmentDirections.actionProductDetailFragmentToAddReviewFragment(productId, reviewId)
+        )
+    }
+
+
+}
+
+interface OnReviewClickedListener {
+    fun onReviewClicked(productId: String)
 }
