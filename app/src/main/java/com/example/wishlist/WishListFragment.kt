@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.wishlist.data.DataSource
@@ -31,10 +32,12 @@ class WishListFragment :
         val viewModelFactory = ProductViewModelFactory(application)
         viewModel = ViewModelProvider(this, viewModelFactory).get(ProductViewModel::class.java)
 
-        adapter = ProductAdapter(
-            productList = viewModel.productList,
-            listener = this
-        )
+        adapter = ProductAdapter(listener = this)
+        //Observer for liveData
+        viewModel.productList.observe(viewLifecycleOwner, Observer {
+            viewModel.updateCurrentProductList(it)
+            adapter.submitList(it)
+        })
 
         binding.buttonToCart.setOnClickListener { 
             this.findNavController().navigate(WishListFragmentDirections.actionWishListFragmentToShoppingCartFragment())

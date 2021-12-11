@@ -31,10 +31,7 @@ class ShoppingCartFragment : Fragment() {
         binding.recyclerViewCart.adapter = adapter
 
         viewModel.cart.observe(viewLifecycleOwner) {
-            adapter.cartItems = viewModel.getProductsFromIds(it)
-            adapter.notifyDataSetChanged()
+            adapter.submitList(viewModel.getProductsFromIds(it))
         }
     }
-
-
 }

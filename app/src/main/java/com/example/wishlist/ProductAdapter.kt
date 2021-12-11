@@ -2,13 +2,15 @@ package com.example.wishlist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.wishlist.data.model.Product
 import com.example.wishlist.databinding.ListItemProductBinding
 
-class ProductAdapter(val productList: List<Product>, val listener: OnProductClickedListener) :
-    RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
+class ProductAdapter(val listener: OnProductClickedListener) :
+    ListAdapter<Product, ProductAdapter.ProductViewHolder>(ProductDiffCallback()) {
 
     class ProductViewHolder(val binding: ListItemProductBinding) : RecyclerView.ViewHolder(binding.root)
     //need to pass in the view to initialize it
@@ -20,7 +22,7 @@ class ProductAdapter(val productList: List<Product>, val listener: OnProductClic
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
-        val product = productList[position]
+        val product = getItem(position)
         holder.binding.apply {
             productName.text = product.name
             productPrice.text = product.getFormatPrice()
@@ -33,11 +35,15 @@ class ProductAdapter(val productList: List<Product>, val listener: OnProductClic
                 listener.onProductClicked(product.id)
             }
         }
+    }
+}
 
-
+private class ProductDiffCallback: DiffUtil.ItemCallback<Product>(){
+    override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean {
+        return oldItem.id == newItem.id
     }
 
-    override fun getItemCount(): Int {
-        return productList.size
+    override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean {
+        return oldItem == newItem
     }
 }

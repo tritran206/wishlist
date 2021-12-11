@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -76,9 +77,14 @@ class ProductDetailFragment : Fragment(), OnReviewClickedListener
     }
 
     private fun bindRecyclerView() {
-        val adapter = ReviewAdapter(viewModel.filterReviews(product.id), this)
-        binding.recyclerViewReview.adapter = adapter
+        val adapter = ReviewAdapter( this)
 
+        viewModel.reviewList.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                adapter.submitList(viewModel.filterReviews(productId, it))
+            }
+        })
+        binding.recyclerViewReview.adapter = adapter
     }
 
     override fun onReviewClicked(reviewId: String) {

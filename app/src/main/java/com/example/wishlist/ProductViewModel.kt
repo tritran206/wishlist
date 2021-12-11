@@ -3,6 +3,7 @@ package com.example.wishlist
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.wishlist.data.model.CartItem
 import com.example.wishlist.data.model.Product
 import com.example.wishlist.data.model.Review
@@ -13,10 +14,17 @@ class ProductViewModel(application: Application): AndroidViewModel(application) 
     private val context = getApplication<Application>().applicationContext
     private val repository = Repository(context)
 
-    var reviewsList: List<Review> = repository.getAllReviews()
+    private val _reviewList = repository.getAllReviews()
+    val reviewList
+        get() = _reviewList
+
+    var productList: LiveData<List<Product>> = repository.getAllProducts()
     private set
-    var productList: List<Product> = repository.getAllProducts()
+
+    var currentProductList = emptyList<Product>()
     private set
+
+    // Add backing property vs private set
     var cart: LiveData<List<CartItem>> = repository.getCart()
     private set
 
@@ -32,8 +40,8 @@ class ProductViewModel(application: Application): AndroidViewModel(application) 
         repository.insertReview(review)
     }
 
-    fun filterReviews(productId: String): List<Review> {
-        return reviewsList.filter{
+    fun filterReviews(productId: String, reviews: List<Review>): List<Review> {
+        return reviews.filter{
             it.productId == productId
         }
     }
@@ -41,11 +49,12 @@ class ProductViewModel(application: Application): AndroidViewModel(application) 
     fun getProductsFromIds(items: List<CartItem>): List<Product> {
         val products = mutableListOf<Product>()
         items.forEach { cartItem ->
-            products.add(
-                productList.first { product ->
-                    product.id == cartItem.productId
-                }
-            )
+            currentProductList.firstOrNull { product ->
+                product.id == cartItem.productId
+            }?.let {
+                products.add(it)
+            }
+
         }
         return products
     }
@@ -54,5 +63,9 @@ class ProductViewModel(application: Application): AndroidViewModel(application) 
     fun addProductToCart(itemId: String) {
         val cartItem = CartItem(0, productId = itemId)
         repository.insertCartItem(cartItem)
+    }
+
+    fun updateCurrentProductList(productList: List<Product>){
+        currentProductList = productList
     }
 }
