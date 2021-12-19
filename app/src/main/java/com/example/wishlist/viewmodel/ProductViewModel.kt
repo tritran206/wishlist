@@ -53,7 +53,6 @@ class ProductViewModel(application: Application): AndroidViewModel(application) 
             }?.let {
                 products.add(it)
             }
-
         }
         return products
     }

@@ -4,20 +4,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textView_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/name" />
-
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <androidx.appcompat.widget.AppCompatEditText
+        android:layout_height="wrap_content"
+        android:hint="@string/name">
+
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editText_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLines="1"/>
+            android:maxLines="1" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
@@ -31,29 +27,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:numStars="5"
-        android:stepSize="0.5"/>
-
-    <TextView
-        android:id="@+id/textView_reviewDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/description" />
+        android:stepSize="0.5" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <androidx.appcompat.widget.AppCompatEditText
+        android:layout_height="wrap_content"
+        android:hint="@string/description">
+
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editText_reviewDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLength="400"
-            android:maxLines="3"/>
+            android:maxLines="3" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/button_submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/submit"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:text="@string/submit" />
 </androidx.appcompat.widget.LinearLayoutCompat>
