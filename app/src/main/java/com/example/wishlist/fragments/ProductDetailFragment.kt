@@ -52,6 +52,7 @@ class ProductDetailFragment : Fragment(), OnReviewClickedListener
         bindButton()
         bindRecyclerView()
         bindProductView()
+        bindSwipeRefresh()
 
     }
 
@@ -105,7 +106,13 @@ class ProductDetailFragment : Fragment(), OnReviewClickedListener
         )
     }
 
-
+    private fun bindSwipeRefresh(){
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            this.view?.invalidate()
+            binding.swipeRefreshLayout.isRefreshing = false
+            Toast.makeText(activity, "Refreshing!", Toast.LENGTH_SHORT).show()
+        }
+    }
 }
 
 interface OnReviewClickedListener {
