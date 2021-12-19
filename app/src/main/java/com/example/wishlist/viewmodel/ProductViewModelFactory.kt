@@ -1,4 +1,4 @@
-package com.example.wishlist
+package com.example.wishlist.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.ViewModel

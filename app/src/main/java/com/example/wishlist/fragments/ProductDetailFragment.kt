@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -14,6 +13,8 @@ import com.bumptech.glide.Glide
 import com.example.wishlist.data.model.Product
 import com.example.wishlist.data.model.ReviewAdapter
 import com.example.wishlist.databinding.FragmentProductDetailBinding
+import com.example.wishlist.viewmodel.ProductViewModel
+import com.example.wishlist.viewmodel.ProductViewModelFactory
 
 private const val PRODUCT_ID = "productId"
 
@@ -24,16 +25,14 @@ class ProductDetailFragment : Fragment(), OnReviewClickedListener
     private val binding get() = _binding!!
     private var productId: String = ""
     private lateinit var product: Product
-    private lateinit var viewModel:ProductViewModel
+    private lateinit var viewModel: ProductViewModel
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            productId = it.getString(PRODUCT_ID) ?: ""
+            productId = it.getString(PRODUCT_ID) ?: throw NoProductIdException()
         }
-        val application = requireNotNull(this.activity).application
-        val viewModelFactory = ProductViewModelFactory(application)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(ProductViewModel::class.java)
+
     }
 
     override fun onCreateView(
@@ -41,25 +40,38 @@ class ProductDetailFragment : Fragment(), OnReviewClickedListener
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentProductDetailBinding.inflate(inflater, container, false)
-        product = viewModel.getProduct(productId)
-        bindButton()
-        bindRecyclerView()
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        getViewModel()
+        product = viewModel.getProduct(productId)
+        bindButton()
+        bindRecyclerView()
+        bindProductView()
+
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun getViewModel() {
+        val application = requireNotNull(this.activity).application
+        viewModel = ProductViewModel.getInstance(application)
+    }
+
+    private fun bindProductView() {
         binding.textViewProductName.text = product.name
         binding.textViewProductPrice.text = product.getFormatPrice()
         binding.textViewDescription.text = product.description
         Glide.with(binding.root)
             .load(product.pictureUrl)
             .into(binding.imageViewProduct)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private fun bindButton() {

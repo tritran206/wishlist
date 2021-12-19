@@ -1,9 +1,8 @@
-package com.example.wishlist
+package com.example.wishlist.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.wishlist.data.model.CartItem
 import com.example.wishlist.data.model.Product
 import com.example.wishlist.data.model.Review
@@ -68,4 +67,14 @@ class ProductViewModel(application: Application): AndroidViewModel(application) 
     fun updateCurrentProductList(productList: List<Product>){
         currentProductList = productList
     }
-}
+
+    companion object {
+        private var instance: ProductViewModel? = null
+        fun getInstance(application: Application): ProductViewModel {
+            if (instance == null) {
+                instance = ProductViewModel(application)
+            }
+            return instance!!
+        }
+}}
+
