@@ -8,7 +8,7 @@ import com.example.wishlist.data.model.Product
 import com.example.wishlist.data.model.Review
 import com.example.wishlist.data.model.Repository
 
-class ProductViewModel(application: Application): AndroidViewModel(application) {
+class ProductViewModel(application: Application) : AndroidViewModel(application) {
 
     private val context = getApplication<Application>().applicationContext
     private val repository = Repository(context)
@@ -16,16 +16,13 @@ class ProductViewModel(application: Application): AndroidViewModel(application) 
     private val _reviewList = repository.getAllReviews()
     val reviewList
         get() = _reviewList
-
     var productList: LiveData<List<Product>> = repository.getAllProducts()
-    private set
-
+        private set
     var currentProductList = emptyList<Product>()
-    private set
-
+        private set
     // Add backing property vs private set
     var cart: LiveData<List<CartItem>> = repository.getCart()
-    private set
+        private set
 
     fun getProduct(id: String): Product {
         return repository.getProduct(id)
@@ -40,7 +37,7 @@ class ProductViewModel(application: Application): AndroidViewModel(application) 
     }
 
     fun filterReviews(productId: String, reviews: List<Review>): List<Review> {
-        return reviews.filter{
+        return reviews.filter {
             it.productId == productId
         }
     }
@@ -57,23 +54,24 @@ class ProductViewModel(application: Application): AndroidViewModel(application) 
         return products
     }
 
-   //TODO update when livedata is implemented
     fun addProductToCart(itemId: String) {
         val cartItem = CartItem(0, productId = itemId)
         repository.insertCartItem(cartItem)
     }
 
-    fun updateCurrentProductList(productList: List<Product>){
+    fun updateCurrentProductList(productList: List<Product>) {
         currentProductList = productList
     }
 
     companion object {
         private var instance: ProductViewModel? = null
+
         fun getInstance(application: Application): ProductViewModel {
             if (instance == null) {
                 instance = ProductViewModel(application)
             }
             return instance!!
         }
-}}
+    }
+}
 

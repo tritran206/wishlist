@@ -5,9 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
 import com.example.wishlist.viewmodel.ProductViewModel
-import com.example.wishlist.viewmodel.ProductViewModelFactory
 import com.example.wishlist.ShoppingCartAdapter
 import com.example.wishlist.databinding.FragmentShoppingCartBinding
 

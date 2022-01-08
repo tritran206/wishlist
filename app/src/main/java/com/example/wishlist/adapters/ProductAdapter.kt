@@ -1,4 +1,4 @@
-package com.example.wishlist
+package com.example.wishlist.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,11 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.wishlist.data.model.Product
 import com.example.wishlist.databinding.ListItemProductBinding
+import com.example.wishlist.fragments.OnProductClickedListener
 
 class ProductAdapter(val listener: OnProductClickedListener) :
     ListAdapter<Product, ProductAdapter.ProductViewHolder>(ProductDiffCallback()) {
 
-    class ProductViewHolder(val binding: ListItemProductBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class ProductViewHolder(val binding: ListItemProductBinding) : RecyclerView.ViewHolder(binding.root)
     //need to pass in the view to initialize it
 
     //code that runs to inflate view that was created

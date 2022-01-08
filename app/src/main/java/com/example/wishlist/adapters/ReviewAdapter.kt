@@ -1,13 +1,13 @@
-package com.example.wishlist.data.model
+package com.example.wishlist.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.wishlist.OnProductClickedListener
-import com.example.wishlist.OnReviewClickedListener
+import com.example.wishlist.data.model.Review
 import com.example.wishlist.databinding.ListItemReviewBinding
+import com.example.wishlist.fragments.OnReviewClickedListener
 
 class ReviewAdapter(private val listener: OnReviewClickedListener): ListAdapter<Review, ReviewAdapter.ReviewViewHolder>(ReviewsDiffCallback()) {
 

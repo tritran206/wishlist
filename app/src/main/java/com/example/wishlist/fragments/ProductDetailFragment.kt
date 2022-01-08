@@ -1,4 +1,4 @@
-package com.example.wishlist
+package com.example.wishlist.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,14 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.example.wishlist.NoProductIdException
+import com.example.wishlist.adapters.ReviewAdapter
 import com.example.wishlist.data.model.Product
-import com.example.wishlist.data.model.ReviewAdapter
 import com.example.wishlist.databinding.FragmentProductDetailBinding
 import com.example.wishlist.viewmodel.ProductViewModel
-import com.example.wishlist.viewmodel.ProductViewModelFactory
 
 private const val PRODUCT_ID = "productId"
 
@@ -53,7 +52,6 @@ class ProductDetailFragment : Fragment(), OnReviewClickedListener
         bindRecyclerView()
         bindProductView()
         bindSwipeRefresh()
-
     }
 
     override fun onDestroyView() {

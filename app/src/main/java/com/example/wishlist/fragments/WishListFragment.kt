@@ -1,4 +1,4 @@
-package com.example.wishlist
+package com.example.wishlist.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,11 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.wishlist.adapters.ProductAdapter
 import com.example.wishlist.databinding.FragmentWishListBinding
 import com.example.wishlist.viewmodel.ProductViewModel
-import com.example.wishlist.viewmodel.ProductViewModelFactory
 
 class WishListFragment :
     Fragment(),
