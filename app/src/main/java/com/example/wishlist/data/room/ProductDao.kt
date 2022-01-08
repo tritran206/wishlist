@@ -1,5 +1,6 @@
 package com.example.wishlist.data.room
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -13,7 +14,7 @@ interface ProductDao {
     fun insertProduct(product: Product)
 
     @Query("SELECT * FROM Product")
-    fun getAllProducts(): List<Product>
+    fun getAllProducts(): LiveData<List<Product>>
 
     @Query("SELECT * FROM Product WHERE id = :id")
     fun getProduct(id: String): Product

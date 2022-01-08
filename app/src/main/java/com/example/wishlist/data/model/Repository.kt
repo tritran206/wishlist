@@ -20,7 +20,7 @@ class Repository(context: Context) {
         return productDao.getProduct(id)
     }
 
-    fun getAllProducts(): List<Product> {
+    fun getAllProducts(): LiveData<List<Product>>{
         return productDao.getAllProducts()
     }
 //
@@ -33,7 +33,7 @@ class Repository(context: Context) {
 //    }
 
     /** Reviews **/
-    fun getProductReviews(id: String): List<Review> {
+    fun getProductReviews(id: String): LiveData<List<Review>> {
         return reviewDao.getReviewsByProductId(id)
     }
 
@@ -41,7 +41,7 @@ class Repository(context: Context) {
         return reviewDao.getReviewById(id)
     }
 
-    fun getAllReviews(): List<Review> {
+    fun getAllReviews(): LiveData<List<Review>> {
         return reviewDao.getAllReviews()
     }
 
@@ -62,9 +62,7 @@ class Repository(context: Context) {
         cartDao.insertItem(cartItem)
     }
 
-
     /** Setup */
-
     private fun setReviews() {
         listOf(
             Review(

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="button_width">120dp</dimen>
+    <dimen name="button_height">60dp</dimen>
+    <dimen name="list_item_cart_image_width">40dp</dimen>
+    <dimen name="list_item_cart_image_height">40dp</dimen>
+    <dimen name="list_item_cart_name_textview_width">200dp</dimen>
+    <dimen name="list_item_cart_price_textview_width">80dp</dimen>
+    <dimen name="list_item_cart_textview_margin">16dp</dimen>
+</resources>

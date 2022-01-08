@@ -1,4 +1,4 @@
-package com.example.wishlist
+package com.example.wishlist.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,13 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.example.wishlist.NoProductIdException
+import com.example.wishlist.adapters.ReviewAdapter
 import com.example.wishlist.data.model.Product
-import com.example.wishlist.data.model.ReviewAdapter
 import com.example.wishlist.databinding.FragmentProductDetailBinding
+import com.example.wishlist.viewmodel.ProductViewModel
 
 private const val PRODUCT_ID = "productId"
 
@@ -23,16 +24,14 @@ class ProductDetailFragment : Fragment(), OnReviewClickedListener
     private val binding get() = _binding!!
     private var productId: String = ""
     private lateinit var product: Product
-    private lateinit var viewModel:ProductViewModel
+    private lateinit var viewModel: ProductViewModel
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            productId = it.getString(PRODUCT_ID) ?: ""
+            productId = it.getString(PRODUCT_ID) ?: throw NoProductIdException()
         }
-        val application = requireNotNull(this.activity).application
-        val viewModelFactory = ProductViewModelFactory(application)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(ProductViewModel::class.java)
+
     }
 
     override fun onCreateView(
@@ -40,25 +39,38 @@ class ProductDetailFragment : Fragment(), OnReviewClickedListener
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentProductDetailBinding.inflate(inflater, container, false)
-        product = viewModel.getProduct(productId)
-        bindButton()
-        bindRecyclerView()
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        getViewModel()
+        product = viewModel.getProduct(productId)
+        bindButton()
+        bindRecyclerView()
+        bindProductView()
+        bindSwipeRefresh()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun getViewModel() {
+        val application = requireNotNull(this.activity).application
+        viewModel = ProductViewModel.getInstance(application)
+    }
+
+    private fun bindProductView() {
         binding.textViewProductName.text = product.name
         binding.textViewProductPrice.text = product.getFormatPrice()
         binding.textViewDescription.text = product.description
         Glide.with(binding.root)
             .load(product.pictureUrl)
             .into(binding.imageViewProduct)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private fun bindButton() {
@@ -76,9 +88,14 @@ class ProductDetailFragment : Fragment(), OnReviewClickedListener
     }
 
     private fun bindRecyclerView() {
-        val adapter = ReviewAdapter(viewModel.filterReviews(product.id), this)
-        binding.recyclerViewReview.adapter = adapter
+        val adapter = ReviewAdapter( this)
 
+        viewModel.reviewList.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                adapter.submitList(viewModel.filterReviews(productId, it))
+            }
+        })
+        binding.recyclerViewReview.adapter = adapter
     }
 
     override fun onReviewClicked(reviewId: String) {
@@ -87,7 +104,13 @@ class ProductDetailFragment : Fragment(), OnReviewClickedListener
         )
     }
 
-
+    private fun bindSwipeRefresh(){
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            this.view?.invalidate()
+            binding.swipeRefreshLayout.isRefreshing = false
+            Toast.makeText(activity, "Refreshing!", Toast.LENGTH_SHORT).show()
+        }
+    }
 }
 
 interface OnReviewClickedListener {

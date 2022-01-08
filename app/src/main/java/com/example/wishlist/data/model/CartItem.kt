@@ -3,8 +3,6 @@ package com.example.wishlist.data.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverters
-import com.example.wishlist.StringTypeConverter
 
 @Entity
 data class CartItem(

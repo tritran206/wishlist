@@ -33,6 +33,5 @@
             app:layout_constraintTop_toBottomOf="@id/reviewName"
             tools:text="Ordering this from walmart was a very hard task, from the beginning to the end, when i can finally get it, it comes broken, the box has a damage in one of the corners, and when i open it, also the console" />
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
