@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/wishListFragment"
         android:name="com.example.wishlist.fragments.WishListFragment"
-        android:label="WishList"
+        android:label="Wish List"
         tools:layout="@layout/fragment_wish_list">
         <action
             android:id="@+id/action_wishListFragment_to_productDetailFragment"
@@ -21,7 +21,7 @@
     <fragment
         android:id="@+id/productDetailFragment"
         android:name="com.example.wishlist.fragments.ProductDetailFragment"
-        android:label="ProductDetail"
+        android:label="Product Detail"
         tools:layout="@layout/fragment_product_detail">
         <argument
             android:name="productId"
@@ -37,7 +37,7 @@
     <fragment
         android:id="@+id/addReviewFragment"
         android:name="com.example.wishlist.fragments.AddReviewFragment"
-        android:label="AddReviewFragment" >
+        android:label="Add Review" >
         <argument
             android:name="productId"
             app:argType="string" />
@@ -51,6 +51,6 @@
     <fragment
         android:id="@+id/shoppingCartFragment"
         android:name="com.example.wishlist.fragments.ShoppingCartFragment"
-        android:label="fragment_shopping_cart"
+        android:label="Your Cart"
         tools:layout="@layout/fragment_shopping_cart" />
 </navigation>
