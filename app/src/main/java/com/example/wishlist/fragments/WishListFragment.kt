@@ -1,12 +1,11 @@
 package com.example.wishlist.fragments
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.example.wishlist.R
 import com.example.wishlist.adapters.ProductAdapter
 import com.example.wishlist.databinding.FragmentWishListBinding
 import com.example.wishlist.viewmodel.ProductViewModel
@@ -25,6 +24,7 @@ class WishListFragment :
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        setHasOptionsMenu(true)
         _binding = FragmentWishListBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -34,8 +34,17 @@ class WishListFragment :
 
         getViewModel()
         bindLiveData()
-        bindButton()
         bindProductRecyclerView()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.main_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.menuItem_goToCart) { goToCart() }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onDestroyView() {
@@ -62,10 +71,8 @@ class WishListFragment :
         })
     }
 
-    private fun bindButton() {
-        binding.buttonToCart.setOnClickListener {
-            this.findNavController().navigate(WishListFragmentDirections.actionWishListFragmentToShoppingCartFragment())
-        }
+    private fun goToCart() {
+        this.findNavController().navigate(WishListFragmentDirections.actionWishListFragmentToShoppingCartFragment())
     }
 
     private fun bindProductRecyclerView() {

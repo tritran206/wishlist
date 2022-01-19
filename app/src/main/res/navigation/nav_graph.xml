@@ -21,7 +21,7 @@
     <fragment
         android:id="@+id/productDetailFragment"
         android:name="com.example.wishlist.fragments.ProductDetailFragment"
-        android:label="ProductDetail"
+        android:label="Product Detail"
         tools:layout="@layout/fragment_product_detail">
         <argument
             android:name="productId"
@@ -30,14 +30,14 @@
             android:id="@+id/action_productDetailFragment_to_addReviewFragment"
             app:destination="@id/addReviewFragment" />
         <action
-            android:id="@+id/action_productDetailFragment_to_addReviewFragment2"
-            app:destination="@id/addReviewFragment" />
+            android:id="@+id/action_productDetailFragment_to_shoppingCartFragment"
+            app:destination="@id/shoppingCartFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/addReviewFragment"
         android:name="com.example.wishlist.fragments.AddReviewFragment"
-        android:label="AddReviewFragment" >
+        android:label="Add Review" >
         <argument
             android:name="productId"
             app:argType="string" />
@@ -51,6 +51,6 @@
     <fragment
         android:id="@+id/shoppingCartFragment"
         android:name="com.example.wishlist.fragments.ShoppingCartFragment"
-        android:label="fragment_shopping_cart"
+        android:label="Your Cart"
         tools:layout="@layout/fragment_shopping_cart" />
 </navigation>
