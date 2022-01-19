@@ -7,81 +7,87 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ProductDetailFragment">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/imageView_Product"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="ContentDescription" />
+            android:layout_height="match_parent"
+            tools:context=".ProductDetailFragment">
 
-        <TextView
-            style="@style/TextView.Title"
-            android:id="@+id/textView_productName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/imageView_Product"
-            app:layout_constraintStart_toStartOf="parent"/>
+            <ImageView
+                android:id="@+id/imageView_Product"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
 
-        <TextView
-            style="@style/TextView.Title"
-            android:id="@+id/textView_productPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/textView_productName"
-            app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                style="@style/TextView.Title"
+                android:id="@+id/textView_productName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/imageView_Product"
+                app:layout_constraintStart_toStartOf="parent"/>
 
-        <TextView
-            style="@style/TextView.Description"
-            android:id="@+id/textView_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/textView_productPrice"
-            app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                style="@style/TextView.Title"
+                android:id="@+id/textView_productPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/textView_productName"
+                app:layout_constraintStart_toStartOf="parent" />
 
-        <Button
-            android:id="@+id/button_buy"
-            android:layout_width="@dimen/button_width"
-            android:layout_height="@dimen/button_height"
-            android:text="@string/buy_now"
-            android:layout_marginVertical="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textView_description" />
+            <TextView
+                style="@style/TextView.Description"
+                android:id="@+id/textView_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/textView_productPrice"
+                app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            style="@style/TextView.Title"
-            android:id="@+id/textView_review"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Reviews"
-            app:layout_constraintTop_toBottomOf="@id/button_buy"
-            app:layout_constraintStart_toStartOf="parent" />
+            <Button
+                android:id="@+id/button_buy"
+                android:layout_width="@dimen/button_width"
+                android:layout_height="@dimen/button_height"
+                android:text="@string/buy_now"
+                android:layout_marginVertical="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textView_description" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView_review"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_margin="16dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@id/button_buy"
-            app:layout_constraintBottom_toTopOf="@id/textView_review"
-            app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                style="@style/TextView.Title"
+                android:id="@+id/textView_review"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Reviews"
+                app:layout_constraintTop_toBottomOf="@id/button_buy"
+                app:layout_constraintStart_toStartOf="parent" />
 
-        <Button
-            android:id="@+id/button_addReview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="16dp"
-            android:text="@string/add_review"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_review"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                app:layout_constraintBottom_toTopOf="@+id/button_addReview"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textView_review" />
+
+            <Button
+                android:id="@+id/button_addReview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="16dp"
+                android:text="@string/add_review"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

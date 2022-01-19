@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/wishListFragment"
         android:name="com.example.wishlist.fragments.WishListFragment"
-        android:label="Wish List"
+        android:label="WishList"
         tools:layout="@layout/fragment_wish_list">
         <action
             android:id="@+id/action_wishListFragment_to_productDetailFragment"
@@ -30,8 +30,8 @@
             android:id="@+id/action_productDetailFragment_to_addReviewFragment"
             app:destination="@id/addReviewFragment" />
         <action
-            android:id="@+id/action_productDetailFragment_to_addReviewFragment2"
-            app:destination="@id/addReviewFragment" />
+            android:id="@+id/action_productDetailFragment_to_shoppingCartFragment"
+            app:destination="@id/shoppingCartFragment" />
     </fragment>
 
     <fragment

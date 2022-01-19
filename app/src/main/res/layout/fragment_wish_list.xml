@@ -21,12 +21,5 @@
             tools:listitem="@layout/list_item_product"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-        <Button
-            android:id="@+id/button_to_cart"
-            android:text="@string/go_to_cart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"/>
-
     </LinearLayout>
 </ScrollView>

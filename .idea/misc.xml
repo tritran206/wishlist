@@ -8,14 +8,17 @@
         <entry key="app/src/main/res/drawable/ic_baseline_videogame_asset_24.xml" value="0.20364583333333333" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.35625" />
         <entry key="app/src/main/res/drawable/ic_videogame_asset_24.xml" value="0.20364583333333333" />
+        <entry key="app/src/main/res/drawable/shopping_cart_ic.xml" value="0.21217105263157895" />
+        <entry key="app/src/main/res/drawable/shopping_cart_teal_ic.xml" value="0.21217105263157895" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_add_review.xml" value="0.3640625" />
-        <entry key="app/src/main/res/layout/fragment_product_detail.xml" value="0.2151268115942029" />
-        <entry key="app/src/main/res/layout/fragment_shopping_cart.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/fragment_product_detail.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_shopping_cart.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_wish_list.xml" value="0.11546052631578947" />
         <entry key="app/src/main/res/layout/list_item_cart.xml" value="0.20328947368421052" />
         <entry key="app/src/main/res/layout/list_item_product.xml" value="0.21197916666666666" />
         <entry key="app/src/main/res/layout/list_item_review.xml" value="0.3640625" />
+        <entry key="app/src/main/res/menu/main_menu.xml" value="0.20230263157894737" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.20364583333333333" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.20364583333333333" />
       </map>
