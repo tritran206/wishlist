@@ -74,18 +74,18 @@ class ProductDetailFragment : Fragment(), OnReviewClickedListener
     }
 
     private fun bindProductView() {
-        binding.textViewProductName.text = product.name
-        binding.textViewProductPrice.text = product.getFormatPrice()
-        binding.textViewDescription.text = product.description
+        binding.textViewProductName.text = product.productName
+        binding.textViewProductPrice.text = product.price
+        binding.textViewDescription.text = product.shortDescription
         Glide.with(binding.root)
-            .load(product.pictureUrl)
+            .load(getString(R.string.base_url) + product.productImage)
             .into(binding.imageViewProduct)
     }
 
     private fun bindButton() {
         binding.buttonBuy.setOnClickListener {
-            viewModel.addProductToCart(product.id)
-            Toast.makeText(activity, "Thanks for buying ${product.name}", Toast.LENGTH_LONG).show()
+            viewModel.addProductToCart(product.productId)
+            Toast.makeText(activity, "Thanks for buying ${product.productName}", Toast.LENGTH_LONG).show()
             this.findNavController().popBackStack()
         }
 

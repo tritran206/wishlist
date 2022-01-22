@@ -1,14 +1,19 @@
 package com.example.wishlist.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.wishlist.R
 import com.example.wishlist.adapters.ProductAdapter
+import com.example.wishlist.data.model.Product
 import com.example.wishlist.databinding.FragmentWishListBinding
+import com.example.wishlist.services.ProductService
 import com.example.wishlist.viewmodel.ProductViewModel
+import java.util.concurrent.Executor
+import java.util.concurrent.Executors
 
 class WishListFragment :
     Fragment(),
@@ -19,6 +24,7 @@ class WishListFragment :
     private val binding get() = _binding!!
     lateinit var adapter: ProductAdapter
     lateinit var viewModel: ProductViewModel
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -80,6 +86,8 @@ class WishListFragment :
         val recyclerProducts = binding.recyclerProducts
         recyclerProducts.adapter = adapter
     }
+
+
 }
 
 interface OnProductClickedListener {

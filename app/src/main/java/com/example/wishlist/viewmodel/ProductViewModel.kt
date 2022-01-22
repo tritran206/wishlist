@@ -1,12 +1,16 @@
 package com.example.wishlist.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.wishlist.data.model.CartItem
 import com.example.wishlist.data.model.Product
 import com.example.wishlist.data.model.Review
 import com.example.wishlist.data.model.Repository
+import java.util.concurrent.Executor
+import java.util.concurrent.Executors
 
 class ProductViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -16,16 +20,30 @@ class ProductViewModel(application: Application) : AndroidViewModel(application)
     private val _reviewList = repository.getAllReviews()
     val reviewList
         get() = _reviewList
-    var productList: LiveData<List<Product>> = repository.getAllProducts()
-        private set
+    val productList = MutableLiveData<List<Product>>()
     var currentProductList = emptyList<Product>()
         private set
     // Add backing property vs private set
     var cart: LiveData<List<CartItem>> = repository.getCart()
         private set
 
+    init{
+        getAllProducts2()
+    }
+
     fun getProduct(id: String): Product {
-        return repository.getProduct(id)
+        return currentProductList.first{
+            it.productId == id
+        }
+    }
+
+    fun getAllProducts2(){
+        val mRunnable = Runnable {
+            productList.postValue(repository.getAllProducts2())
+            Log.i("ProductResponse", "$productList")
+        }
+        val mExecutor: Executor = Executors.newSingleThreadExecutor()
+        mExecutor.execute(mRunnable)
     }
 
     fun getReview(id: String): Review {
@@ -46,7 +64,7 @@ class ProductViewModel(application: Application) : AndroidViewModel(application)
         val products = mutableListOf<Product>()
         items.forEach { cartItem ->
             currentProductList.firstOrNull { product ->
-                product.id == cartItem.productId
+                product.productId == cartItem.productId
             }?.let {
                 products.add(it)
             }

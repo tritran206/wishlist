@@ -21,10 +21,10 @@ class ShoppingCartAdapter(): ListAdapter<Product, ShoppingCartAdapter.CartViewHo
     override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
         val product = getItem(position)
         holder.binding.apply {
-            productName.text = product.name
-            productPrice.text = product.getFormatPrice()
+            productName.text = product.productName
+            productPrice.text = product.price
             Glide.with(root)
-                .load(product.pictureUrl)
+                .load(product.productImage)
                 .into(productImage)
         }
     }
@@ -33,7 +33,7 @@ class ShoppingCartAdapter(): ListAdapter<Product, ShoppingCartAdapter.CartViewHo
 class CartItemDiffCallback(): DiffUtil.ItemCallback<Product>() {
 
     override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean {
-        return oldItem.id == newItem.id
+        return oldItem.productId == newItem.productId
     }
 
     override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean {

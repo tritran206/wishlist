@@ -1,17 +1,23 @@
 package com.example.wishlist.data.model
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.wishlist.data.room.AppDatabase
+import com.example.wishlist.services.ProductService
+import java.util.concurrent.Executor
+import java.util.concurrent.Executors
 
 class Repository(context: Context) {
 
     private val reviewDao = AppDatabase.getInstance(context).reviewDao()
     private val productDao = AppDatabase.getInstance(context).productDao()
     private val cartDao = AppDatabase.getInstance(context).cartDao()
+    private val productService = ProductService.instance
+
 
     init {
-        setProducts()
         setReviews()
     }
 
@@ -20,9 +26,10 @@ class Repository(context: Context) {
         return productDao.getProduct(id)
     }
 
-    fun getAllProducts(): LiveData<List<Product>>{
-        return productDao.getAllProducts()
+    fun getAllProducts2(): List<Product>? {
+        return productService.getProducts(1, 7).execute().body()?.products
     }
+
 //
 //    fun insertProduct(product: Product) {
 //        productDb.insertProduct(product)
@@ -82,42 +89,5 @@ class Repository(context: Context) {
         ).forEach {
             reviewDao.insert(it)
         }
-    }
-
-    private fun setProducts() {
-        listOf(
-            Product(
-                id = "101",
-                name = "Playstation 5",
-                price = 399.99,
-                pictureUrl = "https://image.shutterstock.com/shutterstock/photos/1757486213/display_1500/stock-photo-japan-june-presentation-of-a-new-product-from-sony-wireless-white-console-playstation-1757486213.jpg",
-                description = "Sony's flagship console. Beautiful sleek design. A great console for those who have money to buy from second hand sellers."
-            ),
-            Product(
-                id = "102",
-                name = "Xbox Series X",
-                price = 399.99,
-                pictureUrl = "https://image.shutterstock.com/z/stock-photo-boulder-co-november-microsoft-s-next-gen-gaming-consoles-are-the-xbox-series-x-and-1860770944.jpg",
-                description = "What is this? Whos knows about it? A console that has been overshadowed by the understocking of PS5"
-            ),
-            Product(
-                id = "103",
-                name = "Nintendo Switch (OLED)",
-                price = 349.99,
-                pictureUrl = "https://cdn02.nintendo-europe.com/media/images/08_content_images/systems_5/nintendo_switch_3/nintendo_switch_oled/CI_NSwitch_main.jpg",
-                description = "The console that has captured all of our hearts and our loved ones. It has brought us Animal Crossing and Super Mario Bros"
-
-            ),
-            Product(
-                id = "104",
-                name = "Sega Genesis",
-                price = 49.99,
-                pictureUrl = "https://media.gamestop.com/i/gamestop/10175135/SEGA-Genesis-Mini-Console?\$pdp2x\$",
-                description = "known as the Mega Drive outside North America, is a 16-bit fourth-generation home video game console developed and sold by Sega. The Genesis was Sega's third console and the successor to the Master System"
-            )
-        ).forEach {
-            productDao.insertProduct(it)
-        }
-
     }
 }

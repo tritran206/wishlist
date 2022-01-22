@@ -6,7 +6,7 @@ import com.example.wishlist.data.model.CartItem
 import com.example.wishlist.data.model.Product
 import com.example.wishlist.data.model.Review
 
-@Database(entities = [Product::class, Review::class, CartItem::class], version = 2, exportSchema = false)
+@Database(entities = [Product::class, Review::class, CartItem::class], version = 5, exportSchema = false)
 abstract class AppDatabase: RoomDatabase() {
 
     abstract fun productDao(): ProductDao
