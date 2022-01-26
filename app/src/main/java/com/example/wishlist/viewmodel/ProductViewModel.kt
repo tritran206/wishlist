@@ -46,6 +46,14 @@ class ProductViewModel(application: Application) : AndroidViewModel(application)
         mExecutor.execute(mRunnable)
     }
 
+    fun removeItemById(id: String) {
+        repository.removeItemById(id)
+    }
+
+    fun clearCart() {
+        repository.clearCart()
+    }
+
     fun getReview(id: String): Review {
         return repository.getReview(id)
     }

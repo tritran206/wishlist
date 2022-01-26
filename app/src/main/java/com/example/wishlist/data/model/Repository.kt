@@ -69,6 +69,14 @@ class Repository(context: Context) {
         cartDao.insertItem(cartItem)
     }
 
+    fun removeItemById(id: String){
+        cartDao.removeItemById(id)
+    }
+
+    fun clearCart() {
+        cartDao.clearCart()
+    }
+
     /** Setup */
     private fun setReviews() {
         listOf(

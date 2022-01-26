@@ -15,4 +15,10 @@ interface CartDao {
 
     @Query("SELECT * FROM CartItem")
     fun getCart(): LiveData<List<CartItem>>
+
+    @Query("DELETE FROM CartItem WHERE item_id = :id")
+    fun removeItemById(id: String)
+
+    @Query("DELETE FROM CartItem")
+    fun clearCart()
 }

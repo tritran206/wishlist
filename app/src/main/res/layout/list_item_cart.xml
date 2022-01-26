@@ -20,14 +20,22 @@
             android:layout_width="@dimen/list_item_cart_name_textview_width"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="@dimen/list_item_cart_textview_margin"/>
+            android:layout_margin="@dimen/list_item_cart_textview_margin" />
 
         <TextView
             android:id="@+id/product_price"
             android:layout_width="@dimen/list_item_cart_price_textview_width"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:layout_gravity="center"
             tools:text="$100" />
+
+        <ImageButton
+            android:id="@+id/product_delete_image_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/delete_black_ic"
+            android:background="@null"
+            android:layout_gravity="center"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.cardview.widget.CardView>

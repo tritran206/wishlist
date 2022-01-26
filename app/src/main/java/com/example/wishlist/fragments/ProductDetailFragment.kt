@@ -85,7 +85,7 @@ class ProductDetailFragment : Fragment(), OnReviewClickedListener
     private fun bindButton() {
         binding.buttonBuy.setOnClickListener {
             viewModel.addProductToCart(product.productId)
-            Toast.makeText(activity, "Thanks for buying ${product.productName}", Toast.LENGTH_LONG).show()
+            Toast.makeText(activity, "${product.productName} was added to your shopping cart", Toast.LENGTH_LONG).show()
             this.findNavController().popBackStack()
         }
 
