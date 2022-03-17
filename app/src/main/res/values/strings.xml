@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">David\'s Wish List</string>
+    <string name="app_name">Wish List</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="shopping_cart">Shopping Cart</string>
     <string name="buy_now">Buy Now</string>
@@ -9,4 +9,5 @@
     <string name="rating">Rating</string>
     <string name="description">Description</string>
     <string name="submit">Submit</string>
+    <string name="base_url">https://mobile-tha-server.firebaseapp.com</string>
 </resources>

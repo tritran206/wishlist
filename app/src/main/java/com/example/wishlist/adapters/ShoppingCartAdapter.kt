@@ -1,4 +1,4 @@
-package com.example.wishlist
+package com.example.wishlist.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,10 +6,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.wishlist.R
 import com.example.wishlist.data.model.Product
 import com.example.wishlist.databinding.ListItemCartBinding
 
-class ShoppingCartAdapter(): ListAdapter<Product, ShoppingCartAdapter.CartViewHolder>(CartItemDiffCallback()) {
+class ShoppingCartAdapter(val listener: OnCartClickedListener): ListAdapter<Product, ShoppingCartAdapter.CartViewHolder>(CartItemDiffCallback()) {
 
     class CartViewHolder(val binding: ListItemCartBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -21,11 +22,14 @@ class ShoppingCartAdapter(): ListAdapter<Product, ShoppingCartAdapter.CartViewHo
     override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
         val product = getItem(position)
         holder.binding.apply {
-            productName.text = product.name
-            productPrice.text = product.getFormatPrice()
+            productName.text = product.productName
+            productPrice.text = product.price
             Glide.with(root)
-                .load(product.pictureUrl)
+                .load(holder.itemView.context.getString(R.string.base_url) + product.productImage)
                 .into(productImage)
+            productDeleteImageButton.setOnClickListener {
+                listener.removeItemFromCart(product.productId)
+            }
         }
     }
 }
@@ -33,10 +37,14 @@ class ShoppingCartAdapter(): ListAdapter<Product, ShoppingCartAdapter.CartViewHo
 class CartItemDiffCallback(): DiffUtil.ItemCallback<Product>() {
 
     override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean {
-        return oldItem.id == newItem.id
+        return oldItem.productId == newItem.productId
     }
 
     override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean {
         return oldItem == newItem
     }
+}
+
+interface OnCartClickedListener {
+    fun removeItemFromCart(productId: String)
 }

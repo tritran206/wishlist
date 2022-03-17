@@ -52,5 +52,9 @@
         android:id="@+id/shoppingCartFragment"
         android:name="com.example.wishlist.fragments.ShoppingCartFragment"
         android:label="Your Cart"
-        tools:layout="@layout/fragment_shopping_cart" />
+        tools:layout="@layout/fragment_shopping_cart" >
+        <action
+            android:id="@+id/action_shoppingCartFragment_to_wishListFragment"
+            app:destination="@id/wishListFragment" />
+    </fragment>
 </navigation>
